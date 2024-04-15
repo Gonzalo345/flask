@@ -1,11 +1,21 @@
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
+# Filtros personalizados
+
+from datetime import datetime
 
 @app.route('/')
 @app.route('/index')
 def index():
-    return '<h1>Página de inicio</h1>'
+    name = 'Gonzalo'
+    friends = ['Matias', 'Agustin', 'Agusto']
+    date = datetime.now()
+    return render_template(
+        'index.html', 
+        name = name, 
+        friends = friends, 
+        date = date)
 
 @app.route('/hello')
 @app.route('/hello/<name>')
@@ -17,3 +27,7 @@ def hello(name = None, age = None):
         return f'<h1>Hola, {name}!</h1>'
     else:   
         return f'<h1>Hola Mundo, {name} y tu edad es {age}!</h1>'
+from markupsafe import escape
+@app.route('/code/<path:code>')
+def code(code):
+    return f'<code>{escape(code)}</code>'
