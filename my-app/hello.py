@@ -7,11 +7,10 @@ app = Flask(__name__)
 def today(date):
     return date.strftime('%d-%m-%Y')
 
-#@app.add_template_global
+@app.add_template_global
 def repeat(s, n):
     return s * n
 
-app.add_template_global(repeat, 'repeat')
 from datetime import datetime
 
 @app.route('/')
