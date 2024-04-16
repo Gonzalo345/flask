@@ -5,6 +5,7 @@
 <h1>Registrar Usuario</h1>
 
 <form action="" method="post">
+    {{ form.hidden_tag()}}
     {{ form.username.label}}{{ form.username }}
     {{ form.password.label}}{{ form.password }}
     {{ form.submit}}

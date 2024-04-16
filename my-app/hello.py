@@ -61,15 +61,19 @@ class RegisterForm(FlaskForm):
 @app.route('/auth/register', methods = ['GET', 'POST'])
 def register():
     form = RegisterForm()
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        if len(username) >= 8 and len(username) <= 25 and len(password) >= 8 and len (password) <= 40:
-            return f"Nombre de usuario: {username}, Contraseña: {password}"
-        else:
-            error = """"Nobre de usuario tiene que tener entre 8 y 25 caracteres y 
-            la contraseña debe tener entre 8 y 40 caracteres.
-            """
-            return render_template('auth/register.html', form = form, error = error)
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+        return f"Nombre de usuario: {username}, Contraseña: {password}" 
+    #if request.method == 'POST':
+    #    username = request.form['username']
+    #    password = request.form['password']
+    #    if len(username) >= 8 and len(username) <= 25 and len(password) >= 8 and len (password) <= 40:
+    #        return f"Nombre de usuario: {username}, Contraseña: {password}"
+    #    else:
+    #        error = """"Nobre de usuario tiene que tener entre 8 y 25 caracteres y 
+    #        la contraseña debe tener entre 8 y 40 caracteres.
+    #        """
+    #        return render_template('auth/register.html', form = form, error = error)
     
     return render_template('auth/register.html', form = form)
