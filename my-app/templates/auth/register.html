@@ -3,7 +3,15 @@
 
 {% block content %}
 <h1>Registrar Usuario</h1>
+
 <form action="" method="post">
+    {{ form.username.label}}{{ form.username }}
+    {{ form.password.label}}{{ form.password }}
+    {{ form.submit}}
+</form>
+
+
+<!-- <form action="" method="post">
     <label for="username">Nombre de Usuario</label>
     <input type="text" name="username" id="username" required>
     <br>
@@ -12,7 +20,7 @@
     <br>
     <input type="submit" value="Registrar">
 
-</form>
+</form> -->
 {% if error %}
     <p style ="color: red;">{{ error }}</p>
 {% endif %}
