@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for, request
 
 app = Flask(__name__)
 # Filtros personalizados
@@ -14,8 +14,10 @@ def repeat(s, n):
 from datetime import datetime
 
 @app.route('/')
-@app.route('/index')
 def index():
+    print(url_for('index'))
+    print(url_for('hello', name = 'Gonzalo', age = '37'))
+    print(url_for('code', code = 'print("Hola mundo 3")'))
     name = 'Gonzalo'
     friends = ['Matias', 'Agustin', 'Agusto']
     date = datetime.now()
@@ -44,6 +46,11 @@ def code(code):
     return f'<code>{escape(code)}</code>'
 
 # Registrar usario
-#@app.route('/auth/register')
-#def register():
-#    return render_template('auth/register.html')
+@app.route('/auth/register', methods = ['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        return f"Nombre de usuario: {username}, Contraseña: {password}"
+    
+    return render_template('auth/register.html')
