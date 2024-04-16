@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 
 def create_app():
         
@@ -9,9 +9,15 @@ def create_app():
         DEBUG = True,
         SECRET_KEY = 'dev'
     )
+    # Registro de blueprint
+    from . import todo
+    app.register_blueprint(todo.bp)
+    
+    from . import auth
+    app.register_blueprint(auth.bp)
 
     @app.route('/')
     def index():
-        return 'Hola mundo'
+        return render_template('index.html')
 
     return app
