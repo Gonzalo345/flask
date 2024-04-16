@@ -42,3 +42,8 @@ from markupsafe import escape
 @app.route('/code/<path:code>')
 def code(code):
     return f'<code>{escape(code)}</code>'
+
+# Registrar usario
+#@app.route('/auth/register')
+#def register():
+#    return render_template('auth/register.html')
