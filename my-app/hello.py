@@ -7,7 +7,7 @@ app = Flask(__name__)
 def today(date):
     return date.strftime('%d-%m-%Y')
 
-@app.add_template_global
+#@app.add_template_global
 def repeat(s, n):
     return s * n
 
@@ -30,13 +30,15 @@ def index():
 @app.route('/hello')
 @app.route('/hello/<name>')
 @app.route('/hello/<name>/<int:age>')
-def hello(name = None, age = None):
-    if name == None and age == None:
-        return '<h1>Hola mundo!</h1>'
-    elif age == None:
-        return f'<h1>Hola, {name}!</h1>'
-    else:   
-        return f'<h1>Hola Mundo, {name} y tu edad es {age}!</h1>'
+@app.route('/hello/<name>/<int:age>/<email>')
+def hello(name = None, age = None, email = None):
+    my_data = {
+        'name': name,
+        'age' : age,
+        'email' : email
+    }
+    return render_template('hello.html',data = my_data)
+
 from markupsafe import escape
 @app.route('/code/<path:code>')
 def code(code):
