@@ -52,10 +52,11 @@ def code(code):
 # crear formulario wtform
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import DataRequired, Length
 
 class RegisterForm(FlaskForm):
-    username = StringField("Nombre de usuario: ")
-    password = PasswordField("Password: ")
+    username = StringField("Nombre de usuario: ", validators= [DataRequired(), Length(min=4, max=25)])
+    password = PasswordField("Password: ", validators=[DataRequired(),Length(min=4, max=25)])
     submit = SubmitField("Registrar: ")
 # Registrar usario
 @app.route('/auth/register', methods = ['GET', 'POST'])
