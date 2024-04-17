@@ -24,7 +24,7 @@ class Todo(db.Model):
         self.state = state
 
     def __repr__(self):
-        return f'<User: {self.title} >'
+        return f'<Todo: {self.title} >'
     
 
     

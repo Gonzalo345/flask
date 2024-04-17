@@ -1,11 +1,27 @@
-from flask import Blueprint, render_template
+from flask import (
+    Blueprint, render_template, request, redirect, flash
+    )
 
-from . import models
+from werkzeug.security import generate_password_hash, check_password_hash
+from .models import User
+from todor import db
+
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
-@bp.route('/sing_in')
+@bp.route('/sing_in', methods = ('GET','POST'))
 def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        user = User(username, generate_password_hash(password))
+        user_name = User.query.filter_by(username = username).first()
+        if user_name == None:
+            db.session.add(user)
+            db.session.commit()
+            return redirect(url_for('auth.login'))
+
     return render_template('auth/register.html')
 
 @bp.route('/login')
