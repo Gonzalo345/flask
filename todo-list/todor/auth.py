@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, render_template, request, redirect, flash
+    Blueprint, render_template, request, redirect, flash, url_for
     )
 
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -16,11 +16,18 @@ def register():
         password = request.form['password']
 
         user = User(username, generate_password_hash(password))
+
+        error = None
+
         user_name = User.query.filter_by(username = username).first()
         if user_name == None:
             db.session.add(user)
             db.session.commit()
             return redirect(url_for('auth.login'))
+        else:
+            error = f'El usuario {username} ya estar registrado'
+        
+        flash(error)
 
     return render_template('auth/register.html')
 
